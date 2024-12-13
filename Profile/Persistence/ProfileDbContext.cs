@@ -31,21 +31,31 @@ public class ProfileDbContext(DbContextOptions<ProfileDbContext> options) : DbCo
             .HasMaxLength(20)
             .IsRequired();
 
+            builder.Navigation(c => c.Addresses)
+                   .AutoInclude();
+
             builder.OwnsMany(c => c.Addresses, addressBuilder =>
             {
                 addressBuilder.ToTable(nameof(Address));
 
                 addressBuilder.Property(c => c.Country)
+                .IsUnicode(true)
+                .HasMaxLength(50)
                 .IsRequired();
 
                 addressBuilder.Property(c => c.City)
+                .IsUnicode(true)
+                .HasMaxLength(50)
                 .IsRequired();
 
                 addressBuilder.Property(c => c.Street)
+                .IsUnicode(true)
+                .HasMaxLength(50)
                 .IsRequired();
 
                 addressBuilder.Property(c => c.PostalCode)
                 .HasConversion<EncryptionConvertor>()
+                .HasMaxLength(100)
                 .IsRequired();
             });
 

@@ -3,16 +3,19 @@ using Profile;
 using Profile.Endpoints;
 using Profile.Models;
 using Scalar.AspNetCore;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.Configure<AppSetting>(builder.Configuration);
 var config = builder.Configuration.Get<AppSetting>();
-builder.Services.AddOptions<Encryption>();
-
 if (config is null)
-    throw new Exception();
+    throw new Exception("AppSetting is empty.");
+
+builder.Services.AddOptions<Encryption>();
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(config.Redis.Connection)); 
 
 builder.Services.AddDbContext<ProfileDbContext>(
     options => options.UseSqlServer(config.ConnectionStrings.defaultConnection)
