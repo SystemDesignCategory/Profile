@@ -1,2 +1,2 @@
 
-<img src="profile as a service.png" width="128"/>
+<img src="profile as a service.png" width="1000"/>
