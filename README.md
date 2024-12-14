@@ -1,2 +1,2 @@
 
-![Description of Image](profile as a service.png)
+<img src="profile as a service.png" width="128"/>
